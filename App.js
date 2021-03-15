@@ -32,6 +32,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold'
 
+  },
+  buttonPicture: {
+    marginRight: 10,
+    marginBottom: 10,
+    width: 80,
+    borderRadius: 6,
+    backgroundColor: '#000000',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    borderColor: 'white'
   }
 })
 
@@ -54,7 +66,9 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
+      <Camera style={styles.camera} type={type} ref={ref => {
+    this.camera = ref;
+  }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -66,6 +80,19 @@ export default function App() {
               );
             }}>
             <Text style={styles.text}> Flip </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonPicture}>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setType(
+              snap = async () => {
+                if (this.camera) {
+                  let photo = await this.camera.takePictureAsync();
+                };
+              }
+            }}>
           </TouchableOpacity>
         </View>
       </Camera>
