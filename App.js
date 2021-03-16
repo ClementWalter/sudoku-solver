@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +13,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "90%",
   },
-  buttonContainer: {
+  buttonFlip: {
     marginLeft: 10,
     marginTop: 10,
     width: 80,
@@ -31,25 +28,28 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontWeight: 'bold'
-
   },
   buttonPicture: {
-    marginRight: 10,
-    marginBottom: 10,
-    width: 80,
-    borderRadius: 6,
-    backgroundColor: '#000000',
+    position: 'absolute',
+    borderRadius: 50,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    height: 40,
-    borderColor: 'white'
-  }
+    width: 90,
+    height: 90,
+    alignSelf: 'center',
+    bottom: 0,
+    marginBottom: 20,
+    borderColor: 'white',
+    borderWidth: 5,
+  },
 })
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -66,12 +66,9 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type} ref={ref => {
-    this.camera = ref;
-  }}>
-        <View style={styles.buttonContainer}>
+      <Camera ref={ref => { camera = ref; }} style={styles.camera} type={type}>
+        <View style={styles.buttonFlip}>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => {
               setType(
                 type === Camera.Constants.Type.back
@@ -82,19 +79,17 @@ export default function App() {
             <Text style={styles.text}> Flip </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.buttonPicture}>
-          <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setType(
-              snap = async () => {
-                if (this.camera) {
-                  let photo = await this.camera.takePictureAsync();
-                };
-              }
-            }}>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.buttonPicture}
+          onPress={async () => {
+            if (camera) {
+              let photo = await camera.takePictureAsync()
+              console.log(photo)
+              setPreviewVisible(true)
+              setCapturedImage(photo)
+            }
+          }}>
+        </TouchableOpacity>
       </Camera>
     </View>
   );
