@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 10,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000000',
@@ -68,18 +68,20 @@ export default function App() {
     return (
       <View
         style={{
-          backgroundColor: 'transparent',
           flex: 1,
-          width: '100%',
-          height: '100%',
+          backgroundColor: 'black',
+          justifyContent: 'center',
+          width: '100%'
         }}
       >
+        <View style={{ flex: 5 }} />
         <ImageBackground
           source={{ uri: photo && photo.uri }}
           style={{
-            flex: 1,
+            flex: 90,
           }}
         />
+        <View style={{ flex: 5 }} />
         <TouchableOpacity
           onPress={retakePicture}
           style={{
@@ -88,12 +90,11 @@ export default function App() {
             position: 'absolute',
             alignItems: 'center',
             borderRadius: 10,
-            bottom: 0,
+            bottom: '8%',
             borderWidth: 3,
             alignContent: 'center',
             justifyContent: 'center',
             borderColor: 'white',
-            marginBottom: 20,
             alignSelf: 'center'
           }}
         >
