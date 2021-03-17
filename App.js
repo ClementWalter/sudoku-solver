@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { Camera } from 'expo-camera';
+import Modal from 'react-native-modal'
+
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +45,9 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 5,
   },
+  grille:  {
+    borderRaduis: 0
+  }
 })
 
 export default function App() {
@@ -50,6 +55,8 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {setModalVisible(!isModalVisible);};
 
   useEffect(() => {
     (async () => {
@@ -135,7 +142,7 @@ export default function App() {
               <Text style={styles.text}> Flip </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
+          /*<TouchableOpacity
             style={styles.buttonPicture}
             onPress={async () => {
               if (camera) {
@@ -145,7 +152,18 @@ export default function App() {
                 setCapturedImage(photo)
               }
             }}>
+          </TouchableOpacity>*/
+          <TouchableOpacity
+          style={styles.buttonPicture} onPress={toggleModal}
+          >
           </TouchableOpacity>
+          <Modal isVisible={isModalVisible}>
+          <View style={{flex: 1}}>
+            <Text>Hello!</Text>
+
+            <Button title="Hide modal" onPress={toggleModal} />
+          </View>
+          </Modal>
         </Camera>
       )}
     </View>
