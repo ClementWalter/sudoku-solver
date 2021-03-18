@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from
 import { Camera } from 'expo-camera';
 import Modal from 'react-native-modal'
 
-// comment
 
 const styles = StyleSheet.create({
   container: {
